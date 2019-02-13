@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using SeafClient.Requests;
+﻿using SeafClient.Requests;
 using SeafClient.Requests.Directories;
 using SeafClient.Requests.Files;
 using SeafClient.Requests.Groups;
@@ -12,6 +7,11 @@ using SeafClient.Requests.StarredFiles;
 using SeafClient.Requests.UserAccountInfo;
 using SeafClient.Types;
 using SeafClient.Utils;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SeafClient
 {
@@ -112,7 +112,7 @@ namespace SeafClient
                 if (!Version.TryParse(verResponse.Version, out v))
                     v = new Version(0, 0, 0);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 v = new Version(0, 0, 0);
             }
@@ -151,12 +151,12 @@ namespace SeafClient
             // get the server version
             Version v = new Version(0, 0, 0);
             try
-            {                
+            {
                 var verResponse = await GetServerInfo(seafWebConnection, serverUri);
                 if (!Version.TryParse(verResponse.Version, out v))
                     v = new Version(0, 0, 0);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 v = new Version(0, 0, 0);
             }
@@ -1043,7 +1043,7 @@ namespace SeafClient
         public async Task<SeafGroup> AddGroup(String groupName)
         {
             var request = new AddGroupRequest(AuthToken, groupName);
-            int groupId = await _webConnection.SendRequestAsync(ServerUri, request);            
+            int groupId = await _webConnection.SendRequestAsync(ServerUri, request);
             return await GetGroupInfo(groupId);
         }
 
@@ -1173,8 +1173,8 @@ namespace SeafClient
 
         private void CheckRequestSupportedByServer(ISeafRequest request)
         {
-            if (request.SupportedWithServerVersion(ServerVersion))            
-                throw new InvalidOperationException("The request is not supportd by a server with version " + ServerVersion.ToString());            
+            if (request.SupportedWithServerVersion(ServerVersion))
+                throw new InvalidOperationException("The request is not supportd by a server with version " + ServerVersion.ToString());
         }
 
         /// <summary>

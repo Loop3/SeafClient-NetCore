@@ -2,7 +2,7 @@
 {
     public static class SeafConnectionFactory
     {
-        private static readonly ISeafWebConnection DefaultConnection;
+        //private static readonly ISeafWebConnection DefaultConnection;
 
         /// <summary>
         /// Returns an instance of the default implementation for ISeafWebConnection
