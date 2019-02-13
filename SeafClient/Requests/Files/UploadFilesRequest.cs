@@ -1,12 +1,9 @@
 ﻿using SeafClient.Utils;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +19,7 @@ namespace SeafClient.Requests.Files
         public string UploadUri { get; set; }
 
         public string TargetDirectory { get; set; }
+        public string RelativePath { get; }
 
         List<UploadFileInfo> files = new List<UploadFileInfo>();
 
@@ -51,8 +49,8 @@ namespace SeafClient.Requests.Files
         /// <param name="filename"></param>
         /// <param name="fileContent"></param>
         /// <param name="progressCallback"></param>
-        public UploadFilesRequest(string authToken, string uploadUri, string targetDirectory, string filename, Stream fileContent, Action<float> progressCallback)
-            : this(authToken, uploadUri, targetDirectory, progressCallback, new UploadFileInfo(filename, fileContent))
+        public UploadFilesRequest(string authToken, string uploadUri, string targetDirectory, string relativePath, string filename, Stream fileContent, Action<float> progressCallback)
+            : this(authToken, uploadUri, targetDirectory, relativePath, progressCallback, new UploadFileInfo(filename, fileContent))
         {
             // --
         }
@@ -65,12 +63,13 @@ namespace SeafClient.Requests.Files
         /// <param name="filename"></param>
         /// <param name="fileContent"></param>
         /// <param name="progressCallback"></param>
-        public UploadFilesRequest(string authToken, string uploadUri, string targetDirectory, Action<float> progressCallback, params UploadFileInfo[] uploadFiles)
+        public UploadFilesRequest(string authToken, string uploadUri, string targetDirectory, string relativePath, Action<float> progressCallback, params UploadFileInfo[] uploadFiles)
             : base(authToken)
         {
             UploadUri = uploadUri;
             UploadProgress = progressCallback;
             TargetDirectory = targetDirectory;
+            RelativePath = relativePath;
 
             files.AddRange(uploadFiles);
         }
@@ -85,7 +84,7 @@ namespace SeafClient.Requests.Files
         {
             string boundary = "Upload---------" + Guid.NewGuid().ToString();
 
-            var request = new HttpRequestMessage(HttpMethod.Post, UploadUri);            
+            var request = new HttpRequestMessage(HttpMethod.Post, UploadUri);
 
             foreach (var hi in GetAdditionalHeaders())
                 request.Headers.Add(hi.Key, hi.Value);
@@ -100,7 +99,7 @@ namespace SeafClient.Requests.Files
                 {
                     if (UploadProgress != null)
                         UploadProgress(p);
-                });                                
+                });
                 fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 fileContent.Headers.TryAddWithoutValidation("Content-Disposition", String.Format("form-data; name=\"file\"; filename=\"{0}\"", f.Filename));
 
@@ -112,10 +111,21 @@ namespace SeafClient.Requests.Files
             if (!tDir.StartsWith("/"))
                 tDir = "/" + tDir;
 
+            // the relative path dir to upload the file to
+            string tPath = RelativePath;
+            if (tPath.StartsWith("/"))
+                tPath = tPath.Substring(1);
+
+
             var dirContent = new StringContent(tDir, Encoding.UTF8);
             dirContent.Headers.ContentType = null;
             dirContent.Headers.TryAddWithoutValidation("Content-Disposition", @"form-data; name=""parent_dir""");
             content.Add(dirContent);
+
+            var pathContent = new StringContent(tPath, Encoding.UTF8);
+            pathContent.Headers.ContentType = null;
+            pathContent.Headers.TryAddWithoutValidation("Content-Disposition", @"form-data; name=""relative_path""");
+            content.Add(pathContent);
 
             // transmit the content length
             long conLen;
@@ -127,7 +137,7 @@ namespace SeafClient.Requests.Files
             // and remove the actual content-type which uses quotes beforehand
             content.Headers.ContentType = null;
             content.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary);
-                        
+
             if (conLen > 0)
             {
                 // in order to disable buffering
