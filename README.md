@@ -2,6 +2,10 @@
 
 This project is a client implementation for the [Seafile](https://www.seafile.com) Web API  for .Net Core).
 
+The original project is https://github.com/renber/SeafClient
+
+I'll not updade this repo, just if I need, if you want, you can send pull request and I will review and aprove if ok.
+
 The aim is to create a library to easily access a Seafile server and the files stored there through a .Net application in a strong-typed fashion (no custom JSON parsing and with meaningful error messages, etc.) The library uses async/await methods for requests to the Seafile server.
 
 The current stable release of the SeafClient library is available on NuGet [here](https://www.nuget.org/packages/SeafClient/).
