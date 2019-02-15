@@ -9,18 +9,22 @@ namespace SeafConsole
         static void Main(string[] args)
         {
             Test().Wait();
+
+            Console.ReadKey();
         }
 
         static async Task Test()
         {
             try
             {
-                var serverUri = new Uri("https://change_here", UriKind.Absolute);
-                var username = "";
-                var password = "".ToCharArray();
+                var serverUri = new Uri("https://cloud.loop3.com.br", UriKind.Absolute);
+                var username = "admin@connecty.me";
+                var password = "9iRoI566".ToCharArray();
                 // authenticate with the Seafile server and retrieve a Session
                 var session = await SeafSession.Establish(serverUri, username, password);
-                var t = await session.Ping();
+                var ping = await session.Ping();
+                Console.WriteLine(session.ServerVersion);
+                Console.WriteLine(ping);
             }
             catch (Exception e)
             {

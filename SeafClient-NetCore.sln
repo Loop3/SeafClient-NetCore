@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeafConsole", "SeafConsole\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeafClient", "SeafClient\SeafClient.csproj", "{2169BF5D-97F8-4E38-9290-9D2A952C002F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeafClient-NetStandard", "SeafClient-NetStandard\SeafClient-NetStandard.csproj", "{EBE24E6A-6EB2-4447-BFC2-4313431DF261}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2169BF5D-97F8-4E38-9290-9D2A952C002F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2169BF5D-97F8-4E38-9290-9D2A952C002F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2169BF5D-97F8-4E38-9290-9D2A952C002F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBE24E6A-6EB2-4447-BFC2-4313431DF261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE24E6A-6EB2-4447-BFC2-4313431DF261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBE24E6A-6EB2-4447-BFC2-4313431DF261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE24E6A-6EB2-4447-BFC2-4313431DF261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
