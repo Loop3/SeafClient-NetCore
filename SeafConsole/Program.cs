@@ -17,9 +17,9 @@ namespace SeafConsole
         {
             try
             {
-                var serverUri = new Uri("https://cloud.loop3.com.br", UriKind.Absolute);
-                var username = "admin@connecty.me";
-                var password = "9iRoI566".ToCharArray();
+                var serverUri = new Uri("", UriKind.Absolute);
+                var username = "";
+                var password = "".ToCharArray();
                 // authenticate with the Seafile server and retrieve a Session
                 var session = await SeafSession.Establish(serverUri, username, password);
                 var ping = await session.Ping();
