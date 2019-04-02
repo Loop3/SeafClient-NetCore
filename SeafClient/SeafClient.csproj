@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/Loop3/SeafClient-NetCore</RepositoryUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Loop3/SeafClient-NetCore/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Loop3/SeafClient-NetCore</PackageProjectUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

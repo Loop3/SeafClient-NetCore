@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SeafClient-NetStandard\SeafClient-NetStandard.csproj" />
+    <ProjectReference Include="..\SeafClient\SeafClient.csproj" />
   </ItemGroup>
 
 </Project>

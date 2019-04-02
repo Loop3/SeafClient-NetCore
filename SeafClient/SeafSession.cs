@@ -790,6 +790,23 @@ namespace SeafClient
         }
 
         /// <summary>
+        ///     Create a share link for the given file/folder
+        /// </summary>
+        /// <param name="libraryId">The id of the library the file/folder is in</param>
+        /// <param name="path">The path to the file/folder</param>
+        /// <param name="password">A password to access the file/folder</param>
+        /// <param name="expireDays">The expiration days to the file/folder link</param>
+        /// <returns>The share link object</returns>
+        public async Task<SeafShareLink> CreateShareFileLink(string libraryId, string path, string password = null, int expireDays = 0)
+        {
+            libraryId.ThrowOnNull(nameof(libraryId));
+            path.ThrowOnNull(nameof(path));
+
+            var request = new CreateShareLinkRequest(AuthToken, libraryId, path, password, expireDays);
+            return await _webConnection.SendRequestAsync(ServerUri, request);
+        }
+
+        /// <summary>
         ///     Get a thumbnail for the given file
         /// </summary>
         /// <param name="dirEntry">The directory entry of the file</param>
